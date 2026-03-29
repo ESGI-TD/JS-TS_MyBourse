@@ -1,9 +1,10 @@
 import { FetchUrlError } from "../errors/apiError.js";
+import { Stock } from "../models/stock.js";
 
-async function getData() {
+export async function getData(): Promise<Stock[] | void> {
   const url = "https://keligmartin.github.io/api/stocks.json";
   return fetch(url)
-    .then((res) => {
+    .then((res): Promise<Stock[]> => {
       if (!res.ok) {
         throw new FetchUrlError(`Erreur: ${res.status}`);
       }
@@ -16,7 +17,10 @@ async function getData() {
 
 async function test() {
   const data = await getData();
-  console.log(data);
+  if (data) {
+    console.log(data[0].history[0].date);
+    console.log(data[0].currency);
+  }
 }
 
 test();
