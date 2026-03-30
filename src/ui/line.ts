@@ -1,4 +1,6 @@
 import { getData } from "../api/api.js";
+import { LineConfig, DataLine, Dataset } from "../charts/line.js";
+
 declare const Chart: any;
 async function displayLine() {
   try {
@@ -6,30 +8,29 @@ async function displayLine() {
     if (!config) {
       throw new Error();
     }
-    console.log(config);
     const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
     new Chart(canvas, config);
   } catch (error) {}
 }
 
-async function setData() {
+async function setData(): Promise<LineConfig | undefined> {
   try {
     const data = await getData();
     if (!data) {
       throw new Error();
     }
-
     const firstData = data[0];
-    const labels = firstData.history.map((res) => res.date);
-    const dataLine = {
-      labels: labels,
-      datasets: data.map((stock) => ({
-        label: stock.name,
-        data: stock.history.map((res) => res.price),
-        fill: true,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      })),
+    const dataLine: DataLine = {
+      labels: firstData.history.map((res) => res.date),
+      datasets: data.map(
+        (stock): Dataset => ({
+          label: stock.name,
+          data: stock.history.map((res) => res.price),
+          fill: true,
+          borderColor: "rgb(192, 122, 75)",
+          tension: 0.1,
+        }),
+      ),
     };
     const config = {
       type: "line" as const,
