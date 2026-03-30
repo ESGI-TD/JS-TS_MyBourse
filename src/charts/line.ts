@@ -1,16 +1,16 @@
-export interface Dataset {
+export type Dataset = {
   label: string;
   data: number[];
   fill: boolean;
   borderColor: string;
   tension: number;
-}
+};
 
-export interface DataLine {
+export type DataLine = {
   labels: string[];
   datasets: Dataset[];
-}
-export interface LineConfig {
+};
+export type LineConfig = {
   type: "line";
   data: DataLine;
-}
+};
