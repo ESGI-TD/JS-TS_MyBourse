@@ -1,23 +1,20 @@
 import { getData } from "../api/api.js";
 import { LineConfig, DataLine, Dataset } from "../charts/line.js";
+import { NoData } from "../errors/apiError.js";
+import { addError } from "../errors/handleError.js";
+import { Stock } from "../models/stock.js";
 
 declare const Chart: any;
-async function displayLine() {
-  try {
-    const config = await setData();
-    if (!config) {
-      throw new Error();
-    }
-    const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
-    new Chart(canvas, config);
-  } catch (error) {}
-}
+let lineChart: any = null;
 
-async function setData(): Promise<LineConfig | undefined> {
+//Création de la config du graphique à partir des data (utilisation des Type pour les assigner)
+async function setLineChartData(
+  stock: Stock[],
+): Promise<LineConfig | undefined> {
   try {
-    const data = await getData();
+    const data = stock;
     if (!data) {
-      throw new Error();
+      throw new NoData("Erreur data: ");
     }
     const firstData = data[0];
     const dataLine: DataLine = {
@@ -38,7 +35,21 @@ async function setData(): Promise<LineConfig | undefined> {
     };
     return config;
   } catch (error) {
-    console.log(`Erreur: ${error}`);
+    addError((error as Error).message + (error as Error).name);
   }
 }
-displayLine();
+
+//Affichage du graphique dans le DOM
+export async function displayStockLine(stock: Stock[]) {
+  try {
+    const config = await setLineChartData(stock);
+    if (!config) {
+      throw new NoData("Erreur config: ");
+    }
+    const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
+    lineChart?.destroy();
+    lineChart = new Chart(canvas, config);
+  } catch (error) {
+    addError((error as Error).message + (error as Error).name);
+  }
+}
