@@ -1,0 +1,21 @@
+body {
+  font-family: cursive;
+}
+
+h1 {
+  text-align: center;
+}
+.error {
+  color: rgb(219, 47, 47);
+  font-weight: 900;
+}
+.stock_btn {
+  cursor: pointer;
+}
+
+.stock_line_btn.active {
+  background-color: #1a73e8;
+  color: white;
+  border-color: #1a73e8;
+  font-weight: bold;
+}
