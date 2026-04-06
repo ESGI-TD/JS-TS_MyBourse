@@ -1,5 +1,8 @@
 body {
   font-family: cursive;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 h1 {
@@ -18,4 +21,22 @@ h1 {
   color: white;
   border-color: #1a73e8;
   font-weight: bold;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.dark_mode {
+  background-color: rgb(51, 50, 50) !important;
+  color: white !important;
+}
+
+.hide {
+  display: none;
+}
+
+.dark_mode_svg {
+  cursor: pointer;
 }
