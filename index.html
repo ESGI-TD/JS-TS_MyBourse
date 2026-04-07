@@ -6,11 +6,11 @@
     <title>MyBourse</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="dark_mode">
+  <body>
     <header class="header">
       <h1>Bienvenue sur MyBourse</h1>
       <svg
-        class="dark_mode_svg"
+        class="dark_mode_svg hide"
         id="sun"
         style="width: 4rem; height: 4rem"
         viewBox="0 0 24 24"
@@ -55,7 +55,7 @@
         </g>
       </svg>
       <svg
-        class="dark_mode_svg hide"
+        class="dark_mode_svg"
         id="moon"
         style="width: 4rem; height: 4rem"
         viewBox="0 0 24 24"
@@ -90,17 +90,18 @@
         <div id="errors" class="error"></div>
       </section>
 
-      <section>
+      <section class="chart_section">
         <h2>Actions Line Chart</h2>
         <p class="loading">Chargement...</p>
         <div id="stocks"></div>
+
+        <div class="line_section">
+          <canvas
+            id="lineChart"
+            style="max-width: 50rem; max-height: 30rem"
+          ></canvas>
+        </div>
       </section>
-      <div>
-        <canvas
-          id="lineChart"
-          style="max-width: 50rem; max-height: 30rem"
-        ></canvas>
-      </div>
     </main>
   </body>
   <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
