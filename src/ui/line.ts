@@ -41,15 +41,11 @@ async function setLineChartData(
 
 //Affichage du graphique dans le DOM
 export async function displayStockLine(stock: Stock[]) {
-  try {
-    const config = await setLineChartData(stock);
-    if (!config) {
-      throw new NoData("Erreur config: ");
-    }
-    const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
-    lineChart?.destroy();
-    lineChart = new Chart(canvas, config);
-  } catch (error) {
-    addError((error as Error).message + (error as Error).name);
+  const config = await setLineChartData(stock);
+  if (!config) {
+    throw new NoData("Erreur config: ");
   }
+  const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
+  lineChart?.destroy();
+  lineChart = new Chart(canvas, config);
 }
