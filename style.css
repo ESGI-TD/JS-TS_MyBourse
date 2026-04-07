@@ -12,8 +12,10 @@ h1 {
   color: rgb(219, 47, 47);
   font-weight: 900;
 }
-.stock_btn {
+.stock_line_btn {
   cursor: pointer;
+  padding: 0.5rem;
+  margin-bottom: 3rem;
 }
 
 .stock_line_btn.active {
