@@ -2,7 +2,12 @@ import { getData } from "../api/api.js";
 import { NoData } from "../errors/apiError.js";
 import { ElementNotFound } from "../errors/domError.js";
 import { addError } from "../errors/handleError.js";
-import { setActiveButton } from "./design.js";
+import {
+  setActiveButton,
+  setButton,
+  setCanvas,
+  setDisplayAllDataButton,
+} from "./design.js";
 import { Stock } from "../models/stock.js";
 
 //On attribut les actions aux boutons avec le type de graphique et la fonction associée
@@ -15,29 +20,27 @@ export async function setStock(
     if (!data) {
       throw new NoData(`Erreur data:`);
     }
-    const element = document.getElementById("stocks") as HTMLElement;
+    const element = document.getElementById("charts_load") as HTMLElement;
     if (!element) {
       throw new ElementNotFound("Erreur Element: ");
     }
+    const divChart = document.createElement("div") as HTMLElement;
+    divChart.id = `${chartType}`;
+    const divBtn = document.createElement("div") as HTMLElement;
+    divBtn.classList.add("charts_button");
+    divBtn.id = `${chartType}_btn`;
+    element.appendChild(divChart);
 
+    const title = document.createElement("h2") as HTMLElement;
+    title.innerHTML = `Actions ${chartType} Chart`;
+    divChart.appendChild(title);
+    divChart.appendChild(divBtn);
+
+    setCanvas(chartType);
     data.forEach((stock) => {
-      const button = document.createElement("button");
-      button.className = `stock_${chartType}_btn`;
-      button.textContent = stock.name;
-      button.addEventListener("click", () => {
-        setActiveButton(button, chartType);
-        functionName([stock]);
-      });
-      element.appendChild(button);
+      setButton(chartType, stock, functionName);
     });
-    const allButton = document.createElement("button");
-    allButton.className = `stock_${chartType}_btn active`;
-    allButton.textContent = "Afficher toutes les actions";
-    allButton.addEventListener("click", () => {
-      setActiveButton(allButton, chartType);
-      functionName(data);
-    });
-    element.appendChild(allButton);
+    setDisplayAllDataButton(chartType, data, functionName);
   } catch (error) {
     addError((error as Error).message + (error as Error).name);
   }

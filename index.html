@@ -90,28 +90,14 @@
         <div id="errors" class="error"></div>
       </section>
 
-      <section>
-        <h2>Actions Line Chart</h2>
+      <section class="charts" id="charts">
         <p class="loading">Chargement...</p>
-        <div id="stocks"></div>
-      </section>
-      <div>
-        <canvas
-          id="lineChart"
-          style="max-width: 50rem; max-height: 30rem"
-        ></canvas>
-      </div>
+        <div id="charts_load" class="charts_section"></div>
 
-      <section>
-        <h2>Actions Bubble Chart</h2>
-      </section>
-      <div>
-        <canvas
-          id="bubbleChart"
-          style="max-width: 50rem; max-height: 30rem"
-        ></canvas>
       </div>
     </main>
+      </section>
+      
   </body>
   <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
   <script type="module" src="dist/main.js"></script>
