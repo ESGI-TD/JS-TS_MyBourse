@@ -21,7 +21,7 @@ async function loadCharts() {
   }
 }
 
-loadCharts();
 setStock("line", displayStockLine); //Setup chartLine button (on passe le type de chart + le nom de la fonction à appeler)
 setStock("bubble", displayStockBubble); //Setup chartBubble button
 setDarkMode();
+loadCharts();

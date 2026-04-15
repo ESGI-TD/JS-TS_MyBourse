@@ -12,17 +12,20 @@ h1 {
   color: rgb(219, 47, 47);
   font-weight: 900;
 }
-.stock_line_btn {
+.stock_btn {
   cursor: pointer;
   padding: 0.5rem;
   margin-bottom: 3rem;
 }
 
-.stock_line_btn {
-  padding: 0.5rem;
+.stock_line_btn.active {
+  background-color: #1a73e8;
+  color: white;
+  border-color: #1a73e8;
+  font-weight: bold;
 }
 
-.stock_line_btn.active {
+.stock_bubble_btn.active {
   background-color: #1a73e8;
   color: white;
   border-color: #1a73e8;
@@ -53,4 +56,22 @@ h1 {
 
 .line_section {
   margin-top: 5rem;
+}
+
+.charts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart {
+  width: 55rem !important;
+  height: auto !important;
+}
+
+.charts_section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  row-gap: 4rem;
 }
