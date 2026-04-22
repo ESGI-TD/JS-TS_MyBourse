@@ -11,6 +11,7 @@ let lineChart: any = null;
 async function setLineChartData(
   stock: Stock[],
 ): Promise<LineConfig | undefined> {
+  const colors = ["#4F8EF7", "#3DDC84", "#FFB020", "#8B5CF6", "#F53B57"];
   try {
     const data = stock;
     if (!data) {
@@ -20,18 +21,28 @@ async function setLineChartData(
     const dataLine: DataLine = {
       labels: firstData.history.map((res) => res.date),
       datasets: data.map(
-        (stock): Dataset => ({
+        (stock, i): Dataset => ({
           label: stock.name,
           data: stock.history.map((res) => res.price),
-          fill: true,
-          borderColor: "rgb(192, 122, 75)",
+          fill: false,
+          borderColor: colors[i],
+          backgroundColor: colors[i],
+          pointRadius: 2,
+          pointHoverRadius: 8,
           tension: 0.1,
         }),
       ),
     };
+
     const config = {
       type: "line" as const,
       data: dataLine,
+      options: {
+        interaction: {
+          mode: "index",
+          intersect: false,
+        },
+      },
     };
     return config;
   } catch (error) {
