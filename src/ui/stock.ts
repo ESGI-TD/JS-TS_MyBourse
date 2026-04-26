@@ -26,6 +26,7 @@ export async function setStock(
     }
     const divChart = document.createElement("div") as HTMLElement;
     divChart.id = `${chartType}`;
+    divChart.classList.add("chart__card");
     const divBtn = document.createElement("div") as HTMLElement;
     divBtn.classList.add("charts_button");
     divBtn.id = `${chartType}_btn`;
