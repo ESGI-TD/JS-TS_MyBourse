@@ -8,6 +8,25 @@ body {
   font-weight: 400;
 }
 
+.preview__section {
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(14, 20, 23, 0.16);
+  margin-bottom: 3rem;
+}
+
+.preview__track {
+  font-family: math;
+  display: flex;
+  gap: 4rem;
+  animation: scroll 60s linear infinite;
+  width: max-content;
+}
+
+.preview__track p {
+  margin: 0.5rem 0;
+}
+
 h1 {
   text-align: center;
 }
@@ -36,14 +55,13 @@ h1 {
 }
 
 .header {
-  border-bottom: 1px solid rgba(14, 20, 23, 0.16);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   margin-bottom: 3rem;
 }
 .dark_mode {
-  background-color: rgb(51, 50, 50) !important;
+  background-color: rgb(73 71 71) !important;
   color: white !important;
 }
 
@@ -86,4 +104,25 @@ h1 {
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid rgba(14, 20, 23, 0.16);
+}
+
+.track {
+  font-style: italic;
+}
+
+.track__good {
+  color: #5bd7a4;
+}
+
+.track__bad {
+  color: #e7093a;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

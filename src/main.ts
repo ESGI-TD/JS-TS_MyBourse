@@ -5,6 +5,7 @@ import { getData } from "./api/api.js";
 import { NoData } from "./errors/apiError.js";
 import { addError } from "./errors/handleError.js";
 import { setDarkMode } from "./ui/darkMode.js";
+import { setTrack } from "./ui/track.js";
 
 //Initialisation des graphiques
 async function loadCharts() {
@@ -23,5 +24,6 @@ async function loadCharts() {
 
 setStock("line", displayStockLine); //Setup chartLine button (on passe le type de chart + le nom de la fonction à appeler)
 setStock("bubble", displayStockBubble); //Setup chartBubble button
-setDarkMode();
-loadCharts();
+setDarkMode(); //Set le dark mode
+loadCharts(); //charge les graphiques
+setTrack(); //Set le layer en haut de page
