@@ -33,16 +33,38 @@ export async function setStock(
     element.appendChild(divChart);
 
     const title = document.createElement("h2") as HTMLElement;
-    title.innerHTML = `Actions ${chartType} Chart`;
+    title.innerHTML = `Actions - <span class="chart__span">${chartType} Chart</span>`;
+    title.classList.add("chart__title");
     divChart.appendChild(title);
     divChart.appendChild(divBtn);
 
     setCanvas(chartType);
+    const divFooter = document.createElement("div") as HTMLElement;
+    divFooter.classList.add("chart__footer");
+    divChart.appendChild(divFooter);
     data.forEach((stock) => {
       setButton(chartType, stock, functionName);
+      setFooterChart(divFooter, stock);
     });
     setDisplayAllDataButton(chartType, data, functionName);
   } catch (error) {
     addError((error as Error).message + (error as Error).name);
   }
+}
+
+async function setFooterChart(div: HTMLElement, stock: Stock) {
+  const divfooterCard = document.createElement("div") as HTMLElement;
+  divfooterCard.classList.add("chart__footer_card");
+  div.appendChild(divfooterCard);
+  const percent = await setActionPercent(stock);
+  divfooterCard.innerHTML = `<div class="chart__footer_card_title"><div></div><h3>${stock.name}</h3></div><p>${stock.currency}</p><p>${percent}</p>`;
+}
+
+export async function setActionPercent(stock: Stock) {
+  const prevStock = stock.history[stock.history.length - 1].price;
+  const percent = ((stock.currentPrice - prevStock) / prevStock) * 100; //On calc le % en comparant la current action avec l'avant derniere
+  if (percent <= 0) {
+    return `<span class="track__bad">${percent.toFixed(2)}%</span>`;
+  }
+  return `<span class="track__good">+${percent.toFixed(2)}%</span>`;
 }
