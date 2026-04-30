@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <section class="preview__section">
+      <div class="preview__track" id="track">
+          
+      </div>
+    </section>
     <header class="header">
       <h1>Bienvenue sur MyBourse</h1>
       <svg
@@ -90,18 +95,14 @@
         <div id="errors" class="error"></div>
       </section>
 
-      <section>
-        <h2>Actions Line Chart</h2>
+      <section class="charts" id="charts">
         <p class="loading">Chargement...</p>
-        <div id="stocks"></div>
-      </section>
-      <div>
-        <canvas
-          id="lineChart"
-          style="max-width: 50rem; max-height: 30rem"
-        ></canvas>
+        <div id="charts_load" class="charts_section"></div>
+
       </div>
     </main>
+      </section>
+      
   </body>
   <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
   <script type="module" src="dist/main.js"></script>

@@ -11,27 +11,39 @@ let lineChart: any = null;
 async function setLineChartData(
   stock: Stock[],
 ): Promise<LineConfig | undefined> {
+  const colors = ["#4F8EF7", "#3DDC84", "#FFB020", "#8B5CF6", "#F53B57"];
   try {
     const data = stock;
+    console.log(data)
     if (!data) {
       throw new NoData("Erreur data: ");
     }
     const firstData = data[0];
     const dataLine: DataLine = {
-      labels: firstData.history.map((res) => res.date),
+      labels: [...firstData.history.map((res) => res.date), "2026-06-28"],
       datasets: data.map(
-        (stock): Dataset => ({
+        (stock, i): Dataset => ({
           label: stock.name,
-          data: stock.history.map((res) => res.price),
-          fill: true,
-          borderColor: "rgb(192, 122, 75)",
+          data: [...stock.history.map((res) => res.price), stock.currentPrice],
+          fill: false,
+          borderColor: colors[i],
+          backgroundColor: colors[i],
+          pointRadius: 2,
+          pointHoverRadius: 8,
           tension: 0.1,
         }),
       ),
     };
+
     const config = {
       type: "line" as const,
       data: dataLine,
+      options: {
+        interaction: {
+          mode: "index",
+          intersect: false,
+        },
+      },
     };
     return config;
   } catch (error) {
