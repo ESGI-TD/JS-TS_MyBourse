@@ -8,13 +8,13 @@ declare const Chart: any;
 let lineChart: any = null;
 
 //Création de la config du graphique à partir des data (utilisation des Type pour les assigner)
-async function setLineChartData(
+export async function setLineChartData(
   stock: Stock[],
 ): Promise<LineConfig | undefined> {
   const colors = ["#4F8EF7", "#3DDC84", "#FFB020", "#8B5CF6", "#F53B57"];
   try {
     const data = stock;
-    console.log(data)
+    console.log(data);
     if (!data) {
       throw new NoData("Erreur data: ");
     }

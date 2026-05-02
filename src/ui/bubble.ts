@@ -13,7 +13,7 @@ declare const Chart: any;
 let bubbleChart: any = null;
 
 //Création de la config du graphique à partir des data (utilisation des Type pour les assigner)
-async function setBubbleChartData(
+export async function setBubbleChartData(
   stock: Stock[],
 ): Promise<BubbleConfig | undefined> {
   try {

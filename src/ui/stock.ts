@@ -3,12 +3,14 @@ import { NoData } from "../errors/apiError.js";
 import { ElementNotFound } from "../errors/domError.js";
 import { addError } from "../errors/handleError.js";
 import {
-  setActiveButton,
+  setActiveChartButton,
   setButton,
   setCanvas,
   setDisplayAllDataButton,
+  setPeriodButton,
 } from "./design.js";
 import { Stock } from "../models/stock.js";
+import { displayStock } from "./chart.js";
 
 //On attribut les actions aux boutons avec le type de graphique et la fonction associée
 export async function setStock(
@@ -32,10 +34,13 @@ export async function setStock(
     divBtn.id = `${chartType}_btn`;
     element.appendChild(divChart);
 
+    const divHeader = document.createElement("div") as HTMLElement;
+    divHeader.classList.add("chart__header");
+    divChart.appendChild(divHeader);
     const title = document.createElement("h2") as HTMLElement;
     title.innerHTML = `Actions - <span class="chart__span">${chartType} Chart</span>`;
     title.classList.add("chart__title");
-    divChart.appendChild(title);
+    divHeader.appendChild(title);
     divChart.appendChild(divBtn);
 
     setCanvas(chartType);
@@ -47,6 +52,7 @@ export async function setStock(
       setFooterChart(divFooter, stock);
     });
     setDisplayAllDataButton(chartType, data, functionName);
+    setPeriodButton(chartType, functionName, divHeader);
   } catch (error) {
     addError((error as Error).message + (error as Error).name);
   }
@@ -68,3 +74,26 @@ export async function setActionPercent(stock: Stock) {
   }
   return `<span class="track__good">+${percent.toFixed(2)}%</span>`;
 }
+
+export async function filterStocksByPeriod(days: number, chartType: string) {
+  console.log(days);
+}
+
+export function setChartSelectButton(chartType: string) {
+  const div = document.getElementById("chats_select") as HTMLElement;
+  const chartButton = document.createElement("button") as HTMLButtonElement;
+  chartButton.classList.add("stock_btn", "stock_chart_btn");
+  chartButton.id = `stock_chart_btn_${chartType}`;
+  chartButton.innerHTML = `${chartType}`;
+  chartButton.addEventListener("click", () => {
+    displayStock(chartType);
+  });
+  div.appendChild(chartButton);
+}
+
+export function removeChart() {
+  const chartDiv = document.getElementById("charts_load") as HTMLElement;
+  chartDiv.innerHTML = "";
+}
+
+function setCanvaElement() {}
