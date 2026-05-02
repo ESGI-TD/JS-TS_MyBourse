@@ -46,6 +46,11 @@ h1 {
   border: 1px solid #2a2f33;
 }
 
+.stock_chart_btn.active {
+  background-color: #2a2f33;
+  color: white;
+}
+
 .stock_btn:hover {
   background-color: #2a2f33;
   color: white;
@@ -128,8 +133,6 @@ h1 {
 
 .track__bad {
   color: #e7093a;
-}
-.chart__title {
 }
 
 .chart__span {
