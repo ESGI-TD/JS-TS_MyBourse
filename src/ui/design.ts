@@ -40,15 +40,15 @@ export function setButton(
 
 export function setPeriodButton(
   chartType: string,
-  functionName: (stocks: Stock[]) => Promise<void>,
   divHeader: HTMLElement,
+  stock: Stock[],
 ) {
   const period = [
     { name: "1S", value: 7 },
     { name: "1M", value: 30 },
+    { name: "2M", value: 60 },
     { name: "3M", value: 90 },
     { name: "6M", value: 180 },
-    { name: "1A", value: 365 },
   ];
   const div = document.createElement("div") as HTMLElement;
   div.classList.add(`${chartType}__header__period`);
@@ -59,9 +59,39 @@ export function setPeriodButton(
     button.innerHTML = `${res.name}`;
     button.addEventListener("click", () => {
       filterStocksByPeriod(res.value, chartType);
+      setActivePeriodButton(button);
     });
     div.appendChild(button);
   });
+}
+
+function setActivePeriodButton(button: HTMLElement) {
+  try {
+    const buttons = document.querySelectorAll(`.chart__period__button`);
+    if (!buttons) {
+      throw new ElementNotFound("Erreur Class: ");
+    }
+    buttons.forEach((el) => {
+      el.classList.remove("active");
+    });
+    button.classList.add("active");
+  } catch (error) {
+    addError((error as Error).message + (error as Error).name);
+  }
+}
+
+export function removeActivePeriodButton() {
+  try {
+    const buttons = document.querySelectorAll(`.chart__period__button`);
+    if (!buttons) {
+      throw new ElementNotFound("Erreur Class: ");
+    }
+    buttons.forEach((el) => {
+      el.classList.remove("active");
+    });
+  } catch (error) {
+    addError((error as Error).message + (error as Error).name);
+  }
 }
 
 export function setDisplayAllDataButton(

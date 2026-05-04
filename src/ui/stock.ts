@@ -11,6 +11,9 @@ import {
 } from "./design.js";
 import { Stock } from "../models/stock.js";
 import { displayStock } from "./chart.js";
+import { currentSelection } from "./chart.js";
+import { displayStockBubble, updateStockBubble } from "./bubble.js";
+import { displayStockLine, updateStockLine } from "./line.js";
 
 //On attribut les actions aux boutons avec le type de graphique et la fonction associée
 export async function setStock(
@@ -52,7 +55,7 @@ export async function setStock(
       setFooterChart(divFooter, stock);
     });
     setDisplayAllDataButton(chartType, data, functionName);
-    setPeriodButton(chartType, functionName, divHeader);
+    setPeriodButton(chartType, divHeader, data);
   } catch (error) {
     addError((error as Error).message + (error as Error).name);
   }
@@ -76,11 +79,23 @@ export async function setActionPercent(stock: Stock) {
 }
 
 export async function filterStocksByPeriod(days: number, chartType: string) {
-  console.log(days);
+  const stocks = currentSelection.get(chartType) ?? [];
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  const filteredData = stocks.map((stock) => ({
+    ...stock,
+    history: stock.history.filter((h) => new Date(h.date) >= date),
+  }));
+  if (chartType === "line") {
+    updateStockLine(filteredData);
+  }
+  if (chartType === "bubble") {
+    updateStockBubble(filteredData);
+  }
 }
 
 export function setChartSelectButton(chartType: string) {
-  const div = document.getElementById("chats_select") as HTMLElement;
+  const div = document.getElementById("charts_select") as HTMLElement;
   const chartButton = document.createElement("button") as HTMLButtonElement;
   chartButton.classList.add("stock_btn", "stock_chart_btn");
   chartButton.id = `stock_chart_btn_${chartType}`;
@@ -95,5 +110,3 @@ export function removeChart() {
   const chartDiv = document.getElementById("charts_load") as HTMLElement;
   chartDiv.innerHTML = "";
 }
-
-function setCanvaElement() {}
