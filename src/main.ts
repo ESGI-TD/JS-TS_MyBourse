@@ -28,6 +28,7 @@ async function loadCharts() {
 }
 setChartSelectButton("line");
 setChartSelectButton("bubble");
+setChartSelectButton("mixed");
 
 //setStock("line", displayStockLine); //Setup chartLine button (on passe le type de chart + le nom de la fonction à appeler)
 //setStock("bubble", displayStockBubble); //Setup chartBubble button

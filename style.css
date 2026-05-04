@@ -43,6 +43,14 @@ h1 {
   column-gap: 1rem;
 }
 
+.mixed__header__period {
+  border: 1px solid #cdc9bb;
+  border-radius: 2rem;
+  padding: 0.2rem;
+  display: flex;
+  column-gap: 1rem;
+}
+
 .bubble__header__period {
   border: 1px solid #cdc9bb;
   border-radius: 2rem;
@@ -199,6 +207,12 @@ h1 {
 
 .chart__footer_card {
   width: 12rem;
+}
+
+.chart__export_button {
+  width: 2.4rem;
+  background-color: none;
+  cursor: pointer;
 }
 @keyframes scroll {
   from {
