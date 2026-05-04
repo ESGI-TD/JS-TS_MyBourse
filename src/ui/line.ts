@@ -1,26 +1,30 @@
 import { getData } from "../api/api.js";
+import { colors } from "../charts/colors.js";
 import { LineConfig, DataLine, Dataset } from "../charts/line.js";
 import { NoData } from "../errors/apiError.js";
 import { addError } from "../errors/handleError.js";
 import { Stock } from "../models/stock.js";
+import { setCurrentSelection } from "./chart.js";
+import { removeActivePeriodButton } from "./design.js";
 
 declare const Chart: any;
 let lineChart: any = null;
 
 //Création de la config du graphique à partir des data (utilisation des Type pour les assigner)
-async function setLineChartData(
+export async function setLineChartData(
   stock: Stock[],
 ): Promise<LineConfig | undefined> {
-  const colors = ["#4F8EF7", "#3DDC84", "#FFB020", "#8B5CF6", "#F53B57"];
   try {
     const data = stock;
-    console.log(data)
     if (!data) {
       throw new NoData("Erreur data: ");
     }
+    const date = new Date();
+    date.setDate(date.getDate());
+    const formatted = date.toISOString().slice(0, 10);
     const firstData = data[0];
     const dataLine: DataLine = {
-      labels: [...firstData.history.map((res) => res.date), "2026-06-28"],
+      labels: [...firstData.history.map((res) => res.date), formatted],
       datasets: data.map(
         (stock, i): Dataset => ({
           label: stock.name,
@@ -53,6 +57,18 @@ async function setLineChartData(
 
 //Affichage du graphique dans le DOM
 export async function displayStockLine(stock: Stock[]) {
+  removeActivePeriodButton();
+  const config = await setLineChartData(stock);
+  if (!config) {
+    throw new NoData("Erreur config: ");
+  }
+  const canvas = document.getElementById("lineChart") as HTMLCanvasElement;
+  lineChart?.destroy();
+  lineChart = new Chart(canvas, config);
+  setCurrentSelection("line", stock);
+}
+
+export async function updateStockLine(stock: Stock[]) {
   const config = await setLineChartData(stock);
   if (!config) {
     throw new NoData("Erreur config: ");
