@@ -74,6 +74,7 @@ h1 {
 .stock_chart_btn {
   font-size: 2rem;
   font-style: italic;
+  min-width: 7rem;
 }
 
 .stock_chart_btn.active {
@@ -221,4 +222,9 @@ h1 {
   to {
     transform: translateX(-50%);
   }
+}
+
+.stock_mixed_btn.active {
+  background-color: #2a2f33;
+  color: white;
 }
