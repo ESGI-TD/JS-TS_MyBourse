@@ -8,6 +8,9 @@ import { NoData } from "../errors/apiError.js";
 import { ElementNotFound } from "../errors/domError.js";
 import { addError } from "../errors/handleError.js";
 import { Stock } from "../models/stock.js";
+import { setCurrentSelection } from "./chart.js";
+import { removeActivePeriodButton } from "./design.js";
+import { colors } from "../charts/colors.js";
 
 declare const Chart: any;
 let bubbleChart: any = null;
@@ -21,13 +24,12 @@ export async function setBubbleChartData(
     if (!data || data.length === 0) {
       throw new NoData("Erreur data: ");
     }
-
     const dataBubble: DataBubble = {
       datasets: data.map(
-        (stock): Dataset => ({
+        (stock, i): Dataset => ({
           label: stock.name,
           data: [buildBubblePoint(stock)],
-          backgroundColor: "rgb(192, 122, 75)",
+          backgroundColor: colors[i],
         }),
       ),
     };
@@ -75,6 +77,24 @@ function buildBubblePoint(stock: Stock): BubbleData {
 
 //Affichage du graphique dans le DOM
 export async function displayStockBubble(stock: Stock[]) {
+  removeActivePeriodButton();
+  const config = await setBubbleChartData(stock);
+  if (!config) {
+    throw new NoData("Erreur config: ");
+  }
+  const canvas = document.getElementById(
+    "bubbleChart",
+  ) as HTMLCanvasElement | null;
+  if (!canvas) {
+    throw new ElementNotFound("Erreur Element: ");
+  }
+
+  bubbleChart?.destroy();
+  bubbleChart = new Chart(canvas, config);
+  setCurrentSelection("bubble", stock);
+}
+
+export async function updateStockBubble(stock: Stock[]) {
   const config = await setBubbleChartData(stock);
   if (!config) {
     throw new NoData("Erreur config: ");
