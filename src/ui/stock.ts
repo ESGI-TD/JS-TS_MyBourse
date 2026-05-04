@@ -2,11 +2,13 @@ import { getData } from "../api/api.js";
 import { NoData } from "../errors/apiError.js";
 import { ElementNotFound } from "../errors/domError.js";
 import { addError } from "../errors/handleError.js";
+import { exportStocks } from "./export.js";
 import {
   setActiveChartButton,
   setButton,
   setCanvas,
   setDisplayAllDataButton,
+  setExportButton,
   setPeriodButton,
 } from "./design.js";
 import { Stock } from "../models/stock.js";
@@ -14,6 +16,7 @@ import { displayStock } from "./chart.js";
 import { currentSelection } from "./chart.js";
 import { displayStockBubble, updateStockBubble } from "./bubble.js";
 import { displayStockLine, updateStockLine } from "./line.js";
+import { updateStockMixed } from "./mixed.js";
 
 //On attribut les actions aux boutons avec le type de graphique et la fonction associée
 export async function setStock(
@@ -56,6 +59,7 @@ export async function setStock(
     });
     setDisplayAllDataButton(chartType, data, functionName);
     setPeriodButton(chartType, divHeader, data);
+    setExportButton(chartType, divHeader);
   } catch (error) {
     addError((error as Error).message + (error as Error).name);
   }
@@ -92,6 +96,9 @@ export async function filterStocksByPeriod(days: number, chartType: string) {
   if (chartType === "bubble") {
     updateStockBubble(filteredData);
   }
+  if (chartType === "mixed") {
+    updateStockMixed(filteredData);
+  }
 }
 
 export function setChartSelectButton(chartType: string) {
@@ -109,4 +116,10 @@ export function setChartSelectButton(chartType: string) {
 export function removeChart() {
   const chartDiv = document.getElementById("charts_load") as HTMLElement;
   chartDiv.innerHTML = "";
+}
+
+export function exportStocksByChart(chartType: string) {
+  const stocks = currentSelection.get(chartType) ?? [];
+  if (stocks.length === 0) return;
+  exportStocks(stocks, chartType);
 }
