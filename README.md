@@ -65,6 +65,9 @@ src/
 
 ### POINT BONUS
 
+### Bandeau déroulant
+Bandeau animé qui affiche la comparaison entre la dernière action d'une entreprise et la précédente pour évaluer la progression
+
 ### Exporter les données dans un fichier csv
 Appuyer sur le bouton en haut à droite du graphique
 
