@@ -61,3 +61,15 @@ src/
 3. **Charts** : Configuration des graphiques basée sur les modèles
 4. **UI** : Rendu des graphiques et gestion des interactions utilisateur
 5. **Errors** : Capture et affichage des erreurs
+
+
+### POINT BONUS
+
+### Exporter les données dans un fichier csv
+Appuyer sur le bouton en haut à droite du graphique
+
+### DarkMode
+DarkMode disponible 
+
+### Préférence utilisateur
+Enregistrer les préférences utilisateur du dark mode et du graphique sélectionné dans le local storage (restitution des préférences au retour de la page)
